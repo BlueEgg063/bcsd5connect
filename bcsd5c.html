@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BCSD5Connect</title>
+  <style>
+    #inputContainer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+  }
+
+  #inputContainer input {
+    flex: 1;
+    padding: 8px;
+    font-size: 16px;
+  }
+
+  #inputContainer button {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+  }
+    #msgs {
+      white-space: pre-wrap;
+      font-family: monospace;
+      background-color: #f4f4f4;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    #msgtitle {
+      margin-bottom: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border: 2px solid #007BFF; /* Add this line for a border */
+    border-radius: 5px; /* Optional: make corners slightly rounded */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
+    }
+    .messages {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border: 2px solid #007BFF; /* Add this line for a border */
+    border-radius: 5px; /* Optional: make corners slightly rounded */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
+  }
+  </style>
+</head>
+<body>
+<div id="inputContainer">
+  <input type="text" id="messageInput" placeholder="Type your message..." />
+  <button onclick="handleSend()">Send</button>
+
+</div>
+  <h2 id="msgtitle">BCSD5Connect</h2>
+  <div id="msgs"></div>
+
+  <script>
+    try{
+        const myname=localStorage.getItem("name");
+    }
+    catch(error){
+        const myname=prompt("This seems to be your first time using the site. Please set a username here. This is stored on your browser, so you can remove your name by deleting cookies.");
+        localStorage.setItem("name", myname);
+    }
+    const displayed=new Set();
+    async function getMessages() {
+      const msgs= document.getElementById("msgs");
+      //msgs.innerHTML="";
+      try {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbwUdcQj542DcLgqes5l6M1CuNXxW-ac4k0dtPYrv0V1AE428BE8ejo5LclVyegkhbw/exec");
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+
+        const data = await response.json();
+        const messages = Array.isArray(data) ? data : [data];
+
+        if (messages.length > 0) {
+        for (var i = 0; i < (messages.length); i++){
+          var msg = messages[i]; // Just show the first message for now
+          var key=msg["Date"]+"_"+msg["Name"];
+          if (displayed.has(key)){
+            continue
+          }
+          else{
+          displayed.add(key);
+          const div=document.createElement("div");
+          div.classList.add("messages");
+          div.innerHTML=`<h3>${msg["Name"]}</h3><strong>${new Date(msg["Date"]).toISOString()}</strong><p>${msg["Msg"]}</p>`;
+          msgs.appendChild(div);
+          }
+        }
+        } else {
+          msgs.textContent = "";
+        }
+
+        console.log("Messages loaded:", messages);
+      } catch (error) {
+        msgs.textContent = "";
+        console.error(error);
+      }
+    }
+    function handleSend() {
+  const input = document.getElementById('messageInput');
+  const message = input.value.trim();
+  if (message) {
+    sendMessage(myname, message);
+    input.value = ''; // Clear input
+  }
+}
+
+    async function sendMessage(name, message) {
+  const formData = new URLSearchParams();
+  formData.append('Name', name);
+  formData.append('Date', new Date().toISOString());
+  formData.append('Msg', message);
+
+  try {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbwUdcQj542DcLgqes5l6M1CuNXxW-ac4k0dtPYrv0V1AE428BE8ejo5LclVyegkhbw/exec', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: formData.toString()
+    });
+
+    const result = await response.json();
+    console.log('Message sent:', result);
+    return result;
+  } catch (error) {
+    console.error('Error sending message:', error);
+    return { status: 'error', message: error.toString() };
+  }
+}
+
+
+    getMessages();
+    setInterval(getMessages, 3000);
+  </script>
+
+</body>
+</html>
