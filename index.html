@@ -66,12 +66,16 @@
   <div id="msgs"></div>
 
   <script>
-    try{
-        const myname=localStorage.getItem("name");
-    }
-    catch(error){
-        const myname=prompt("This seems to be your first time using the site. Please set a username here. This is stored on your browser, so you can remove your name by deleting cookies.");
-        localStorage.setItem("name", myname);
+    let myname = localStorage.getItem("name");
+if (!myname) {
+  myname = prompt("This seems to be your first time using the site. Please set a username here. This is stored on your browser, so you can remove your name by deleting cookies.");
+  if (myname) {
+    localStorage.setItem("name", myname);
+  } else {
+    myname = "Anonymous"; // fallback if user cancels prompt
+  }
+}
+
     }
     const displayed=new Set();
     async function getMessages() {
