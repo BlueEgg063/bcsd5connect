@@ -127,8 +127,10 @@ if (!myname) {
     if (verify === "0DAZ4G84") {
       admin = true;
       alert("Successfully entered admin mode");
+      input.value= '';
     } else {
       alert("Incorrect credentials.");
+      input.value = '';
     }
   } else if (message) {
     sendMessage(myname, message);
