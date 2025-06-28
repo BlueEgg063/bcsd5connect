@@ -68,7 +68,7 @@
 
   <script>
     let myname = localStorage.getItem("name");
-    let admin = False;
+    let admin = false;
 if (!myname) {
   myname = prompt("This seems to be your first time using the site. Please set a username here. This is stored on your browser, so you can remove your name by deleting cookies.");
   if (myname) {
@@ -124,7 +124,7 @@ if (!myname) {
       alert("You have attempted to enter admin mode");
       const verify = prompt("Please enter admin credentials now");
       if (verify=="0DAZ4G84"){
-        admin=True;
+        admin=true;
         alert("Succesfully entered admin mode");
       }
   else {
