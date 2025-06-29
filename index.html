@@ -70,7 +70,7 @@
     let myname = localStorage.getItem("username");
     let logged_in=localStorage.getItem("logged_in")
     let admin = false;
-if (!logged_in) {
+if (logged_in != "true") {
 window.location.href="login/";
 }
 
