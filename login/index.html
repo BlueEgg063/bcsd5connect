@@ -38,7 +38,7 @@ async function handleSend() {
       localStorage.setItem("logged_in", true);
     }
   else if (result.status=='wrong'){
-     msgbox.innerHTML="Username already present. If this is you, please <a href='../'>login</a>?";
+     msgbox.innerHTML="Wrong password.";
   }
   else if (result.status=='404'){
     msgbox.innerHTML="Username not found. Create account <a href='../signup'>here</a>?";
