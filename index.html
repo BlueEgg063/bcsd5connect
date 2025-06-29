@@ -67,15 +67,11 @@
   <div id="msgs"></div>
 
   <script>
-    let myname = localStorage.getItem("name");
+    let myname = localStorage.getItem("username");
+    let logged_in=localStorage.getItem("logged_in")
     let admin = false;
-if (!myname) {
-  myname = prompt("This seems to be your first time using the site. Please set a username here. This is stored on your browser, so you can remove your name by deleting cookies.");
-  if (myname) {
-    localStorage.setItem("name", myname);
-  } else {
-    myname = "Anonymous"; // fallback if user cancels prompt
-  }
+if (!logged_in) {
+window.location.href="login/";
 }
 
     const displayed=new Set();
