@@ -2,7 +2,7 @@
       const msgs= document.getElementById("msgs");
       //msgs.innerHTML="";
       try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbxZ37d7xvLrVekpfcQ5thPYah9xdF-jjsPpZOoHR_VYPZ7NDKhL4CFs329sl4MlsUof/exec");
+        const response = await fetch("https://script.google.com/macros/s/AKfycbypjP_9GqkPKPw3J2kYnGesscy0daWd-7UliUibsERvq3KHpupPe2GBup41M5-IGN3M/exec");
 
         if (!response.ok) {
           throw new Error('Network response was not ok ' + response.statusText);
@@ -66,7 +66,7 @@
   formData.append('Msg', message);
 
   try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbxZ37d7xvLrVekpfcQ5thPYah9xdF-jjsPpZOoHR_VYPZ7NDKhL4CFs329sl4MlsUof/exec', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbypjP_9GqkPKPw3J2kYnGesscy0daWd-7UliUibsERvq3KHpupPe2GBup41M5-IGN3M/exec', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
