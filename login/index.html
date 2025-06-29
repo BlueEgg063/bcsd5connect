@@ -28,7 +28,7 @@ async function handleSend() {
   const msgbox=document.getElementById('box');
   msgbox.innerHTML='';
    if (!name || !psk) {
-    messageEl.textContent = "Please enter both username and password.";
+    msgbox.textContent = "Please enter both username and password.";
     return;
   }
     const result= await sendMessage(name, psk);
@@ -40,6 +40,7 @@ async function handleSend() {
   }
   else if (result.status=='404'){
     msgbox.innerHTML="Username not found. Create account <a href='../signup'>here</a>?";
+  }
   else {
      msgbox.innerHTML="An unknown error occured. Please refresh.";
   }
