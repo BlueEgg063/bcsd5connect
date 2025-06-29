@@ -17,14 +17,30 @@
     <h3>Username:</h3><input id="name"><br>
     <h3>Password:</h3><input id="psk"><br><br>
     <button class="button" onclick="handleSend()">Log in</button>
+    <p id="box"></p>
     <p>Already have an account? Log in <a href="login.html">here</a></p>
   </div>
 </div>
 <script>    
-function handleSend() {
+async function handleSend() {
   const name = document.getElementById('name').value;
   const psk = document.getElementById('psk').value;
-    sendMessage(name, psk);
+  const msgbox=document.getElementById('box');
+  msgbox.innerHTML='';
+   if (!name || !psk) {
+    messageEl.textContent = "Please enter both username and password.";
+    return;
+  }
+    const result= await sendMessage(name, psk);
+    if (result.status=='success'){
+      msgbox.innerHTML="Success! Continue to <a href='../'>the main messageboard</a>?";
+    }
+  else if (result.status=='present'){
+     msgbox.innerHTML="Username already present. If this is you, please <a href='../'>login</a>?";
+  }
+  else {
+     msgbox.innerHTML="An unknown error occured. Please refresh.";
+  }
     name.value = ''; // Clear input
     psk.value = ''; // Clear input
 }
@@ -36,7 +52,7 @@ function handleSend() {
   formData.append('Name', name);
   formData.append("Password", password)
   try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbyK8ePvduTfCt-RpFCOXDCqiBfAxm8CqiUNpsli17kcixcYYsgN9qQnjo1Ozovv_Z8w/exec', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycby-s1ens1YCpVsP0KJTlm7kiIQWh1CA5uMpffdHwEP4LLIDSRphsZYKPdu6crGP9t_d/exec', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
