@@ -52,15 +52,15 @@
       input.value = '';
     }
   } else if (message) {
-    sendMessage(myname, message,'msg');
+    sendMessage(myname, message);
     input.value = ''; // Clear input
   }
 }
 
 
-    async function sendMessage(name, message,action) {
+    async function sendMessage(name, message) {
   const formData = new URLSearchParams();
-  formData.append('action',action)
+  formData.append('action','msg');
   formData.append('Name', name);
   formData.append('Date', new Date().toISOString());
   formData.append('Msg', message);
