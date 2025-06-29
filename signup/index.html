@@ -28,7 +28,7 @@ async function handleSend() {
   const msgbox=document.getElementById('box');
   msgbox.innerHTML='';
    if (!name || !psk) {
-    messageEl.textContent = "Please enter both username and password.";
+    msgbox.textContent = "Please enter both username and password.";
     return;
   }
     const result= await sendMessage(name, psk);
