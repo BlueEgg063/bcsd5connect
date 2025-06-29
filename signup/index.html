@@ -34,6 +34,8 @@ async function handleSend() {
     const result= await sendMessage(name, psk);
     if (result.status=='success'){
       msgbox.innerHTML="Success! Continue to <a href='../'>the main messageboard</a>?";
+      localStorage.setItem("username", name);
+      localStorage.setItem("logged_in", true);
     }
   else if (result.status=='present'){
      msgbox.innerHTML="Username already present. If this is you, please <a href='../'>login</a>?";
