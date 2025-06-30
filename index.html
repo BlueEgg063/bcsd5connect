@@ -59,7 +59,9 @@
 </head>
 <body>
 <div id="inputContainer">
-  <input type="text" id="messageInput" placeholder="Type your message..." />
+    <label for="photo"><img src="photo.png"></label>
+  <input type="file" id="photo" style=" display: none;" accept="image/*">
+  <div id="messageInput" contenteditable="true" style="border:1px solid #ccc; padding:8px; min-height:30px;"></div>
   <button onclick="handleSend()">Send</button>
 
 </div>
@@ -115,7 +117,7 @@ window.location.href="login/";
     }
     function handleSend() {
   const input = document.getElementById('messageInput');
-  const message = input.value.trim();
+  const message = input.innerHTML.trim();
 
   if (message === "#admin7984") {
     alert("You have attempted to enter admin mode");
@@ -123,10 +125,10 @@ window.location.href="login/";
     if (verify === "0DAZ4G84") {
       admin = true;
       alert("Successfully entered admin mode");
-      input.value= '';
+      input.innerHTML= '';
     } else {
       alert("Incorrect credentials.");
-      input.value = '';
+      input.innerHTML = '';
     }
   } else if (message) {
     sendMessage(myname, message);
@@ -159,7 +161,22 @@ window.location.href="login/";
     return { status: 'error', message: error.toString() };
   }
 }
+let photo_data= null;
+const nput = document.getElementById('photo');
 
+  nput.addEventListener('change', function() {
+    const file = nput.files[0];           // 1
+    if (file) {                           // 2
+      const reader = new FileReader();   // 3
+
+      reader.onload = function(e) {      // 4
+        photo_data = e.target.result;
+        document.getElementById("messageInput").innerHTML+=`<img src=${photo_data}>`;   // 5
+      };
+
+      reader.readAsDataURL(file);        // 7
+    }
+  });
 
     getMessages();
     setInterval(getMessages, 1000);
