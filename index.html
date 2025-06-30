@@ -171,7 +171,7 @@ const nput = document.getElementById('photo');
 
       reader.onload = function(e) {      // 4
         photo_data = e.target.result;
-        document.getElementById("messageInput").innerHTML+=`<img src=${photo_data}>`;   // 5
+        document.getElementById("messageInput").innerHTML+="<br>"+`<img src=${photo_data}>`;   // 5
       };
 
       reader.readAsDataURL(file);        // 7
